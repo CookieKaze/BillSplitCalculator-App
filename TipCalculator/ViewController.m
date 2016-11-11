@@ -26,8 +26,9 @@
 }
 - (IBAction)updatePercentage:(UISlider *)sender {
     self.tipPercentageTextField.text = [NSString stringWithFormat:@"%.2f", sender.value];
+    [self calculateTip];
 }
-- (IBAction)calculateTip:(UIButton *)sender {
+- (void) calculateTip {
     float billAmount = [self.billAmountTextField.text floatValue];
     float tipPercentage = [self.tipPercentageTextField.text floatValue];
     float tipAmount = billAmount * (tipPercentage/100);
