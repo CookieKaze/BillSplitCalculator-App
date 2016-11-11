@@ -9,6 +9,10 @@
 #import "ViewController.h"
 
 @interface ViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *billAmountTextField;
+@property (weak, nonatomic) IBOutlet UILabel *tipAmountLabel;
+@property (weak, nonatomic) IBOutlet UITextField *tipPercentageTextField;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end
 
@@ -16,14 +20,48 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:self.view.window];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:self.view.window];
+    
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (IBAction)scrollViewTapRecognizer:(UITapGestureRecognizer *)sender {
+    [UIView animateWithDuration:0.6 animations:^{
+        [self.billAmountTextField resignFirstResponder];
+        [self.tipPercentageTextField resignFirstResponder];
+    }];
 }
 
 
+- (IBAction)calculateTip:(UIButton *)sender {
+    float billAmount = [self.billAmountTextField.text floatValue];
+    float tipPercentage = [self.tipPercentageTextField.text floatValue];
+    float tipAmount = billAmount * (tipPercentage/100);
+    self.tipAmountLabel.text = [NSString stringWithFormat:@"Tip Amount: $%.2f", tipAmount];
+}
+
+
+-(void) keyboardWillShow: (NSNotification *) sender {
+    CGSize keyboardSize = [[[sender userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    [UIView animateWithDuration:0.3 animations:^{
+        CGRect f = self.scrollView.frame;
+        f.size.height -= keyboardSize.height;
+        self.scrollView.frame = f;
+    }];
+    
+}
+-(void) keyboardWillHide: (NSNotification *) sender {
+    CGSize keyboardSize = [[[sender userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    [UIView animateWithDuration:0.3 animations:^{
+        CGRect f = self.scrollView.frame;
+        f.size.height += keyboardSize.height;
+        self.scrollView.frame = f;
+    }];
+}
 @end
