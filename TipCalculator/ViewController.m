@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *tipAmountLabel;
 @property (weak, nonatomic) IBOutlet UITextField *tipPercentageTextField;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UISlider *adjustTipPercentage;
 
 @end
 
@@ -22,23 +23,10 @@
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:self.view.window];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:self.view.window];
-    
 }
-
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    return YES;
+- (IBAction)updatePercentage:(UISlider *)sender {
+    self.tipPercentageTextField.text = [NSString stringWithFormat:@"%.2f", sender.value];
 }
-
-- (IBAction)scrollViewTapRecognizer:(UITapGestureRecognizer *)sender {
-    [UIView animateWithDuration:0.6 animations:^{
-        [self.billAmountTextField resignFirstResponder];
-        [self.tipPercentageTextField resignFirstResponder];
-    }];
-}
-
-
 - (IBAction)calculateTip:(UIButton *)sender {
     float billAmount = [self.billAmountTextField.text floatValue];
     float tipPercentage = [self.tipPercentageTextField.text floatValue];
@@ -46,6 +34,18 @@
     self.tipAmountLabel.text = [NSString stringWithFormat:@"Tip Amount: $%.2f", tipAmount];
 }
 
+#pragma Keyboard Show Hide Methods
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+- (IBAction)scrollViewTapRecognizer:(UITapGestureRecognizer *)sender {
+    [UIView animateWithDuration:0.6 animations:^{
+        [self.billAmountTextField resignFirstResponder];
+        [self.tipPercentageTextField resignFirstResponder];
+    }];
+}
 
 -(void) keyboardWillShow: (NSNotification *) sender {
     CGSize keyboardSize = [[[sender userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;

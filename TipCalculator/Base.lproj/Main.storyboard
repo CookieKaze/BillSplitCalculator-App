@@ -74,6 +74,15 @@
                                             <action selector="calculateTip:" destination="BYZ-38-t0r" eventType="touchUpInside" id="T1v-48-CIV"/>
                                         </connections>
                                     </button>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="15" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="WsN-0v-U6p">
+                                        <rect key="frame" x="54" y="372" width="267" height="31"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="G4H-mj-uGB"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="updatePercentage:" destination="BYZ-38-t0r" eventType="valueChanged" id="DSO-wm-VKo"/>
+                                        </connections>
+                                    </slider>
                                 </subviews>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -87,13 +96,17 @@
                                     <constraint firstItem="xEn-qW-JgA" firstAttribute="leading" secondItem="bWz-cR-qzj" secondAttribute="leading" constant="56" id="BFo-QW-epg"/>
                                     <constraint firstAttribute="trailing" secondItem="7OJ-yI-ZIZ" secondAttribute="trailing" constant="56" id="MgD-Hw-PmW"/>
                                     <constraint firstItem="AqR-Cq-ioQ" firstAttribute="centerX" secondItem="97g-fE-Ghx" secondAttribute="centerX" id="NGH-aW-Rqp"/>
+                                    <constraint firstItem="WsN-0v-U6p" firstAttribute="top" secondItem="7OJ-yI-ZIZ" secondAttribute="bottom" constant="8" id="QQX-aq-10n"/>
+                                    <constraint firstAttribute="trailing" secondItem="WsN-0v-U6p" secondAttribute="trailing" constant="56" id="QVR-ku-On3"/>
                                     <constraint firstItem="97g-fE-Ghx" firstAttribute="top" secondItem="bWz-cR-qzj" secondAttribute="top" constant="116" id="TEn-Lc-Omh"/>
                                     <constraint firstItem="7D8-uN-ce7" firstAttribute="centerX" secondItem="bWz-cR-qzj" secondAttribute="centerX" id="at7-sO-fhJ"/>
+                                    <constraint firstItem="WsN-0v-U6p" firstAttribute="centerX" secondItem="bWz-cR-qzj" secondAttribute="centerX" id="jAQ-hb-Nu4"/>
                                     <constraint firstItem="xEn-qW-JgA" firstAttribute="centerX" secondItem="97g-fE-Ghx" secondAttribute="centerX" id="kXa-FP-iFi"/>
                                     <constraint firstItem="7D8-uN-ce7" firstAttribute="top" secondItem="7OJ-yI-ZIZ" secondAttribute="bottom" constant="183" id="r0I-9j-fyR"/>
                                     <constraint firstItem="xEn-qW-JgA" firstAttribute="top" secondItem="97g-fE-Ghx" secondAttribute="bottom" constant="47" id="t9l-ca-McJ"/>
                                     <constraint firstItem="7OJ-yI-ZIZ" firstAttribute="leading" secondItem="bWz-cR-qzj" secondAttribute="leading" constant="56" id="u6l-C4-Tld"/>
                                     <constraint firstAttribute="bottom" secondItem="7D8-uN-ce7" secondAttribute="bottom" constant="90" id="yAx-i9-thp"/>
+                                    <constraint firstItem="WsN-0v-U6p" firstAttribute="leading" secondItem="bWz-cR-qzj" secondAttribute="leading" constant="56" id="z4p-et-hYu"/>
                                 </constraints>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="unc-Hc-qlH" appends="YES" id="TeI-H6-zRh"/>
@@ -109,6 +122,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="adjustTipPercentage" destination="WsN-0v-U6p" id="SvM-Y1-jev"/>
                         <outlet property="billAmountTextField" destination="AqR-Cq-ioQ" id="5e5-jh-lKT"/>
                         <outlet property="scrollView" destination="bWz-cR-qzj" id="ZtX-FL-cfC"/>
                         <outlet property="tipAmountLabel" destination="xEn-qW-JgA" id="FMP-KX-ACw"/>
