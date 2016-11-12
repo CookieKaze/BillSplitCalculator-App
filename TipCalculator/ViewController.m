@@ -13,7 +13,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *tipAmountLabel;
 @property (weak, nonatomic) IBOutlet UITextField *tipPercentageTextField;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet UISlider *adjustTipPercentage;
+@property (weak, nonatomic) IBOutlet UISlider *peopleSlider;
+@property (weak, nonatomic) IBOutlet UILabel *splitAmountLabel;
+@property (weak, nonatomic) IBOutlet UITextField *peopleNumTextField;
 
 @end
 
@@ -24,15 +26,31 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:self.view.window];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:self.view.window];
 }
-- (IBAction)updatePercentage:(UISlider *)sender {
-    self.tipPercentageTextField.text = [NSString stringWithFormat:@"%.2f", sender.value];
-    [self calculateTip];
+- (IBAction)updatePeopleNumber:(UISlider *)sender {
+    [self checkForNil];
+    int peopleNum = (int)self.peopleSlider.value;
+    self.peopleNumTextField.text = [NSString stringWithFormat:@"%d",peopleNum];
+    NSDecimalNumber * billAmount = [NSDecimalNumber decimalNumberWithString:self.billAmountTextField.text];
+    NSDecimalNumber * tipPercentage = [NSDecimalNumber decimalNumberWithString:self.tipPercentageTextField.text];
+    NSDecimalNumber * totaTip = [billAmount decimalNumberByMultiplyingBy:tipPercentage];
+    NSDecimalNumber * totalAmount = [billAmount decimalNumberByAdding: totaTip];
+    self.tipAmountLabel.text = [NSString stringWithFormat: @"Tip Amounts: %@",[NSNumberFormatter localizedStringFromNumber:totaTip numberStyle:NSNumberFormatterCurrencyStyle]];
+    NSDecimalNumber * numberOfPeople = [[NSDecimalNumber alloc] initWithInt:peopleNum];
+    NSDecimalNumber * totalAfterSplit = [totalAmount decimalNumberByDividingBy:numberOfPeople];
+    self.splitAmountLabel.text = [NSString stringWithFormat: @"Everyone Pays: %@",[NSNumberFormatter localizedStringFromNumber:totalAfterSplit numberStyle:NSNumberFormatterCurrencyStyle]];
 }
-- (void) calculateTip {
-    float billAmount = [self.billAmountTextField.text floatValue];
-    float tipPercentage = [self.tipPercentageTextField.text floatValue];
-    float tipAmount = billAmount * (tipPercentage/100);
-    self.tipAmountLabel.text = [NSString stringWithFormat:@"Tip Amount: $%.2f", tipAmount];
+- (IBAction)onPeopleChange:(UITextField *)sender {
+    if ([self.peopleNumTextField.text intValue]<9 && [self.peopleNumTextField.text intValue]>0){
+        self.peopleSlider.value = [self.peopleNumTextField.text intValue];
+    }
+}
+-(void) checkForNil {
+    if (self.billAmountTextField.text.length <= 0) {
+        self.billAmountTextField.text = @"0";
+    }
+    if (self.tipPercentageTextField.text.length <= 0) {
+        self.tipPercentageTextField.text = @"0";
+    }
 }
 
 #pragma Keyboard Show Hide Methods
@@ -45,6 +63,7 @@
     [UIView animateWithDuration:0.6 animations:^{
         [self.billAmountTextField resignFirstResponder];
         [self.tipPercentageTextField resignFirstResponder];
+        [self.peopleNumTextField resignFirstResponder];
     }];
 }
 
