@@ -26,7 +26,32 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:self.view.window];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:self.view.window];
 }
+
 - (IBAction)updatePeopleNumber:(UISlider *)sender {
+    [self calculate];
+}
+- (IBAction)onBillAmountChange:(UITextField *)sender {
+    [self calculate];
+}
+- (IBAction)onTipPercentageChange:(UITextField *)sender {
+    [self calculate];
+}
+- (IBAction)onPeopleChange:(UITextField *)sender {
+    if ([self.peopleNumTextField.text intValue]<9 && [self.peopleNumTextField.text intValue]>0){
+        self.peopleSlider.value = [self.peopleNumTextField.text intValue];
+    }
+    [self calculate];
+}
+-(void) checkForNil {
+    if (self.billAmountTextField.text.length <= 0) {
+        self.billAmountTextField.text = @"0";
+    }
+    if (self.tipPercentageTextField.text.length <= 0) {
+        self.tipPercentageTextField.text = @"0";
+    }
+}
+
+-(void) calculate {
     [self checkForNil];
     int peopleNum = (int)self.peopleSlider.value;
     self.peopleNumTextField.text = [NSString stringWithFormat:@"%d",peopleNum];
@@ -38,19 +63,6 @@
     NSDecimalNumber * numberOfPeople = [[NSDecimalNumber alloc] initWithInt:peopleNum];
     NSDecimalNumber * totalAfterSplit = [totalAmount decimalNumberByDividingBy:numberOfPeople];
     self.splitAmountLabel.text = [NSString stringWithFormat: @"Everyone Pays: %@",[NSNumberFormatter localizedStringFromNumber:totalAfterSplit numberStyle:NSNumberFormatterCurrencyStyle]];
-}
-- (IBAction)onPeopleChange:(UITextField *)sender {
-    if ([self.peopleNumTextField.text intValue]<9 && [self.peopleNumTextField.text intValue]>0){
-        self.peopleSlider.value = [self.peopleNumTextField.text intValue];
-    }
-}
--(void) checkForNil {
-    if (self.billAmountTextField.text.length <= 0) {
-        self.billAmountTextField.text = @"0";
-    }
-    if (self.tipPercentageTextField.text.length <= 0) {
-        self.tipPercentageTextField.text = @"0";
-    }
 }
 
 #pragma Keyboard Show Hide Methods

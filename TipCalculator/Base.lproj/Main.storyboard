@@ -42,6 +42,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                        <connections>
+                                            <action selector="onTipPercentageChange:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="fh1-gr-oq7"/>
+                                        </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tip Amount: $0.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xEn-qW-JgA">
                                         <rect key="frame" x="56" y="197" width="263" height="21"/>
@@ -61,6 +64,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                        <connections>
+                                            <action selector="onBillAmountChange:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="dS3-g0-iiz"/>
+                                        </connections>
                                     </textField>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="8" translatesAutoresizingMaskIntoConstraints="NO" id="WsN-0v-U6p">
                                         <rect key="frame" x="54" y="432" width="267" height="31"/>
@@ -80,7 +86,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                         <connections>
-                                            <action selector="onPeopleChange:" destination="BYZ-38-t0r" eventType="editingChanged" id="XUQ-Zg-Daz"/>
+                                            <action selector="onPeopleChange:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="StR-0O-fSr"/>
                                         </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Everybody Pays: $0.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tBz-QM-l4p">
